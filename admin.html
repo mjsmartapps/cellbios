@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Partner Portal | CellBios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="bg-light">
+
+    <div id="login-section" class="admin-auth-container">
+        <div class="auth-overlay"></div>
+        <div class="card auth-card relative z-index-2 reveal fade-up active">
+            <div class="text-center mb-4">
+                <h2 style="font-family: var(--font-serif); font-size: 2rem;">
+                    <i class="fa-solid fa-dna logo-icon"></i> CellBios
+                </h2>
+                <h3 class="mt-2" style="font-size: 1.2rem; color: var(--text-dark);">Authorized Portal Access</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Enterprise catalog & inquiry management</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-envelope" style="color: var(--secondary-color); margin-right: 5px;"></i> Corporate Email</label>
+                    <input type="email" id="admin-email" class="form-control" placeholder="admin@cellbios.com" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-lock" style="color: var(--secondary-color); margin-right: 5px;"></i> Secure Password</label>
+                    <input type="password" id="admin-password" class="form-control" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-2">Authenticate <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i></button>
+                <p id="login-error" class="error-text text-center mt-4"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-section" style="display: none;">
+        <nav class="navbar admin-navbar">
+            <div class="w-100 d-flex justify-between align-center px-4">
+                <div class="d-flex align-center gap-2">
+                    <button id="drawer-toggle" class="btn btn-outline" style="border:none; font-size: 1.4rem; padding: 5px 15px;"><i class="fa-solid fa-bars"></i></button>
+                    <a href="#" class="brand-logo" style="font-size: 1.4rem;">
+                        <i class="fa-solid fa-shield-halved logo-icon"></i> CellBios Admin
+                    </a>
+                </div>
+                <div class="d-flex align-center gap-2">
+                    <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-muted); display: none; @media(min-width:768px){display:inline-block;}">System Active</span>
+                    <button id="logout-btn" class="btn btn-outline btn-sm"><i class="fa-solid fa-power-off"></i> Terminate Session</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-wrapper">
+            
+            <div class="admin-sidebar" id="admin-sidebar">
+                <div class="p-4">
+                    <h3 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color);">Control Panel</h3>
+                    <ul class="admin-menu">
+                        <li><a href="#" class="active" data-target="view-catalog"><i class="fa-solid fa-boxes-stacked" style="width: 25px;"></i> Product Catalog</a></li>
+                        <li><a href="#" data-target="view-orders"><i class="fa-solid fa-cart-shopping" style="width: 25px;"></i> Order Requests</a></li>
+                        <li><a href="#" data-target="view-inquiries"><i class="fa-solid fa-inbox" style="width: 25px;"></i> Secure Inquiries</a></li>
+                        <li><a href="#" data-target="view-analytics"><i class="fa-solid fa-chart-line" style="width: 25px;"></i> Data Analytics</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="admin-main-content">
+                
+                <div id="view-catalog" class="admin-view active card">
+                    <div class="d-flex justify-between align-center mb-4 border-bottom pb-4 flex-wrap gap-2">
+                        <div>
+                            <h2 style="font-family: var(--font-serif); font-size: 1.8rem;">Catalog Directory</h2>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Manage premium product listings and technical specifications.</p>
+                        </div>
+                        <button id="show-add-form-btn" class="btn btn-primary"><i class="fa-solid fa-plus" style="margin-right: 8px;"></i> New Entry</button>
+                    </div>
+
+                    <div id="product-form-container" class="bg-light p-4 rounded mb-4" style="display:none; border: 1px solid var(--border-color);">
+                        <h3 id="form-title" class="mb-4" style="color: var(--secondary-color);">Add New Product</h3>
+                        <form id="product-form">
+                            <input type="hidden" id="prod-id">
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                <div class="form-group">
+                                    <label>Product Name</label>
+                                    <input type="text" id="prod-name" class="form-control" placeholder="e.g. Cryopreservation Bags" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select id="prod-category" class="form-control" required>
+                                        <option value="Biotech Products">Biotech Products</option>
+                                        <option value="Medical Products">Medical Products</option>
+                                        <option value="Custom Solutions">Custom Solutions</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Short Description</label>
+                                <input type="text" id="prod-short-desc" class="form-control" placeholder="Brief 1-sentence overview" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Full Technical Description</label>
+                                <textarea id="prod-full-desc" class="form-control" rows="4" placeholder="Detailed technical capabilities and clinical applications..." required></textarea>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                <div class="form-group">
+                                    <label>Specifications (Format: Key:Value, comma separated)</label>
+                                    <input type="text" id="prod-specs" class="form-control" placeholder="Volume: 50ml, Sterility: Gamma Irradiated">
+                                </div>
+                                <div class="form-group">
+                                    <label>High-Res Image URL</label>
+                                    <input type="url" id="prod-image" class="form-control" placeholder="https://..." required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2 mt-2">
+                                <button type="submit" class="btn btn-primary" id="save-prod-btn">Commit to Database</button>
+                                <button type="button" class="btn btn-outline" id="cancel-form-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">Asset</th>
+                                    <th>Nomenclature</th>
+                                    <th>Classification</th>
+                                    <th style="text-align: right;">System Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-product-list">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-orders" class="admin-view card" style="display: none;">
+                    <div class="mb-4 border-bottom pb-4">
+                        <h2 style="font-family: var(--font-serif); font-size: 1.8rem;">Order Requests</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Review and manage client cart submissions and product quote requests.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Client Details</th>
+                                    <th>Items Requested</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-orders-list">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-inquiries" class="admin-view card" style="display: none;">
+                    <div class="mb-4 border-bottom pb-4">
+                        <h2 style="font-family: var(--font-serif); font-size: 1.8rem;">Secure Inquiries</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Review encrypted client requests and clinical partnerships.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Inquiry ID</th>
+                                    <th>Date</th>
+                                    <th>Client / Email</th>
+                                    <th>Subject Area</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-inquiries-list">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-analytics" class="admin-view card" style="display: none;">
+                    <div class="mb-4 border-bottom pb-4">
+                        <h2 style="font-family: var(--font-serif); font-size: 1.8rem;">Data Analytics</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">System performance, catalog metrics, and engagement stats.</p>
+                    </div>
+                    
+                    <div class="analytics-grid">
+                        <div class="stat-card">
+                            <div class="d-flex justify-between align-center">
+                                <h4>Total Assets</h4>
+                                <i class="fa-solid fa-boxes-stacked" style="color: var(--secondary-color); font-size: 1.2rem;"></i>
+                            </div>
+                            <div class="value" id="stat-total-assets">0</div>
+                            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">Live catalog items</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="d-flex justify-between align-center">
+                                <h4>Order Requests</h4>
+                                <i class="fa-solid fa-cart-shopping" style="color: var(--secondary-color); font-size: 1.2rem;"></i>
+                            </div>
+                            <div class="value" id="stat-active-orders">0</div>
+                            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;"><span style="color: orange;">Action Required</span></p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="d-flex justify-between align-center">
+                                <h4>Total Inquiries</h4>
+                                <i class="fa-solid fa-inbox" style="color: var(--secondary-color); font-size: 1.2rem;"></i>
+                            </div>
+                            <div class="value" id="stat-active-inquiries">0</div>
+                            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;"><span style="color: orange;">Action Required</span></p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="d-flex justify-between align-center">
+                                <h4>Server Integrity</h4>
+                                <i class="fa-solid fa-server" style="color: var(--secondary-color); font-size: 1.2rem;"></i>
+                            </div>
+                            <div class="value" style="color: #28a745;">99.9%</div>
+                            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">All systems nominal</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-light rounded p-4 text-center mt-4" style="border: 1px dashed var(--border-color); height: 250px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <i class="fa-solid fa-chart-area fa-3x mb-3" style="color: var(--text-muted); opacity: 0.5;"></i>
+                        <h4 style="color: var(--text-muted);">Interactive Charts Module</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Syncing live data streams...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="data-modal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeDataModal()"></div>
+        <div class="modal-container card" style="max-width: 600px; width: 95%;">
+            <div class="d-flex justify-between align-center mb-4 border-bottom pb-3">
+                <h3 id="data-modal-title" style="margin: 0; font-family: var(--font-serif);">Details</h3>
+                <button class="btn btn-outline btn-sm" style="border:none; font-size:1.4rem; padding: 5px 12px;" onclick="closeDataModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="data-modal-content" style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+                </div>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeConfirmModal()"></div>
+        <div class="modal-container card" style="max-width: 400px; width: 90%; text-align: center;">
+            <i class="fa-solid fa-triangle-exclamation fa-3x mb-3" style="color: #dc3545;"></i>
+            <h3 class="mb-3">Confirm Action</h3>
+            <p id="confirm-modal-msg" class="text-muted mb-4"></p>
+            <div class="d-flex justify-center gap-3">
+                <button class="btn btn-outline" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirm-modal-btn">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-popup" class="custom-popup hidden">
+        <span id="popup-message"></span>
+        <button onclick="closePopup()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
